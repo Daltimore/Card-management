@@ -147,7 +147,6 @@ export default {
       })
     },
     fetchCards() {
-      // this.allMyCards = JSON.parse(localStorage.getItem('myCards'))
       const decryptedData = encryptStorage.getItem('myCards');
       this.allMyCards = decryptedData
     },
