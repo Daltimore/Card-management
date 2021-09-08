@@ -144,7 +144,6 @@ export default {
   mounted() {
     let local = JSON.parse(localStorage.getItem('authObject'));
     this.user = local
-    console.log(this.user);
     if(!local) {
       this.$router.push({ name: 'login'})
     }
