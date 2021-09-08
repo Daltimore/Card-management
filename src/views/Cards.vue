@@ -22,12 +22,13 @@
           v-for="(card, index) in allMyCards"
           :key="index"
           @click="toggleCard(card)"
-          class="bg-green-400 p-4"
+          class="my_card"
         >
         <transition name="flip">
-          <div>
-            {{ card.flipped ? card.cvv : card.card_number }}
-            <span @click="removeCard(index)" class="delete-card">X</span>
+          <div class="relative pt-12 pl-5 justify-center font-bold">
+            {{ card.flipped ? card.cvv : card.card_number.match(/.{1,4}/g).join(' ') }}
+            <span @click="removeCard(index)" class="absolute top-0 right-0 bg-red-500 text-white cursor-pointer rounded-full p-1 w-8 h-8 border border-red-500 flex justify-center">X</span>
+            <p class="text-xl capitalize absolute -bottom-20 right-2">{{user.first_name}} {{user.last_name}}</p>
           </div>
         </transition>
       </div>
@@ -89,6 +90,7 @@ export default {
     return {
       createCardModal: false,
       loader: false,
+      user: {},
       allMyCards: [],
       createCardForm: {
         card_number: '',
@@ -117,14 +119,14 @@ export default {
       },
     }
   },
-  computed: {
-    
-  },
   mounted() {
-    const local = localStorage.getItem('authObject');
+    let local = JSON.parse(localStorage.getItem('authObject'));
+    this.user = local
+    console.log(this.user);
     if(!local) {
       this.$router.push({ name: 'login'})
     }
+
     this.fetchCards()
   },
   methods: {
@@ -170,5 +172,12 @@ export default {
 </script>
 
 <style>
+.my_card {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 243px;
+  height: 153px;
+}
 
 </style>
