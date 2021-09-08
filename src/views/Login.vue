@@ -99,6 +99,7 @@ export default {
             password: this.loginForm.password
           }
           let existingEntries = JSON.parse(localStorage.getItem("allEntries"));
+          if(existingEntries === null)this.errorModal = true
           let result = existingEntries.find(obj => {
             return obj.email === payload.email && obj.password === payload.password;
           })
