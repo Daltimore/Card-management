@@ -15,7 +15,7 @@ export default {
   methods:{
     logout() {
       localStorage.removeItem('authObject');
-      this.$router.push('/')
+      this.$router.push({ name: 'login'})
     }
   }
 

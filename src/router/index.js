@@ -7,16 +7,6 @@ export const router = new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: () => import('@/views/Login.vue')
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: () => import('@/views/Signup.vue')
-    },
-    {
-      path: '/cards',
       component: () => import('@/layouts/BlankLayout.vue'),
       children: [
         {
@@ -25,13 +15,23 @@ export const router = new VueRouter({
           component: () => import('@/views/Cards.vue')
         }
       ]
-    }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/Login.vue')
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import('@/views/Signup.vue')
+    },
   ]
 })
 
 //Route Guard
 router.beforeEach((to, from, next) => {
   const isAuthenticated = JSON.parse(localStorage.getItem('authObject'));
-  if (!isAuthenticated) next({ name: 'login' })
+  if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' })
   else next()
 })

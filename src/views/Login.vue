@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import { encryptStorage } from '../helpers/function'
+
 export default {
   data() {
     return {
@@ -109,12 +111,12 @@ export default {
             this.successModal = true
             localStorage.setItem("authObject", JSON.stringify(result))
             this.$router.push({ name: 'cards'})
-            const cards = JSON.parse(localStorage.getItem("myCards"));
+            const cards = encryptStorage.getItem("myCards");
             if(cards) {
               return 
             }
             let myCards = []
-            localStorage.setItem("myCards", JSON.stringify(myCards))
+            encryptStorage.setItem("myCards", myCards)
             this.successModal = false
           }
         }
