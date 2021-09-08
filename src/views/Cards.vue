@@ -121,6 +121,10 @@ export default {
     
   },
   mounted() {
+    const local = localStorage.getItem('authObject');
+    if(!local) {
+      this.$router.push({ name: 'login'})
+    }
     this.fetchCards()
   },
   methods: {
