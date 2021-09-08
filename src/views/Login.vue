@@ -108,6 +108,10 @@ export default {
             this.successModal = true
             localStorage.setItem("authObject", JSON.stringify(result))
             this.$router.push({ name: 'cards'})
+            const cards = JSON.parse(localStorage.getItem("myCards"));
+            if(cards) {
+              return 
+            }
             let myCards = []
             localStorage.setItem("myCards", JSON.stringify(myCards))
             this.successModal = false

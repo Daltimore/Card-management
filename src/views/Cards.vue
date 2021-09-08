@@ -117,6 +117,9 @@ export default {
       },
     }
   },
+  computed: {
+    
+  },
   mounted() {
     this.fetchCards()
   },
@@ -137,11 +140,12 @@ export default {
             cvv: this.createCardForm.cvv,
             flipped: false
           }
-          let existingCards = JSON.parse(localStorage.getItem('myCards'))
+          let existingCards = encryptStorage.getItem('myCards')
             existingCards.push(payload)
             console.log('Card Added successfully')
             this.loader = false
-            encryptStorage.setItem('myCards', JSON.stringify(existingCards))
+            encryptStorage.setItem('myCards', existingCards)
+            this.fetchCards()
             this.createCardModal = false
         }
       })
@@ -149,11 +153,13 @@ export default {
     fetchCards() {
       const decryptedData = encryptStorage.getItem('myCards');
       this.allMyCards = decryptedData
+      this.$forceUpdate()
     },
     removeCard(index) {
-      const cards = JSON.parse(localStorage.getItem('myCards'))
+      const cards = encryptStorage.getItem('myCards')
       cards.splice(index, 1)
-      localStorage.setItem('myCards', JSON.stringify(cards))
+      encryptStorage.setItem('myCards', cards)
+      this.fetchCards()
     }
   }
 }
