@@ -51,6 +51,20 @@ html, body {
   width: 100%;
 }
 
+.flip-enter-active {
+  transition: all 0.4s ease;
+}
+
+.flip-leave-active {
+  display: none;
+}
+
+.flip-enter, .flip-leave {
+  transform: rotateY(180deg);
+  opacity: 0;
+
+}
+
 @media (max-width: 767.98px) {
   #login .el-input__inner {
     width: 100%;

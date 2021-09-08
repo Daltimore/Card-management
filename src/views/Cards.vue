@@ -19,11 +19,11 @@
       
       <section class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-10" v-else>
         <div
-        v-for="(card, index) in allMyCards"
-        :key="index"
-        @click="toggleCard(card)"
-         class="bg-green-400 p-4"
-      >
+          v-for="(card, index) in allMyCards"
+          :key="index"
+          @click="toggleCard(card)"
+          class="bg-green-400 p-4"
+        >
         <transition name="flip">
           <div>
             {{ card.flipped ? card.cvv : card.card_number }}
