@@ -32,7 +32,7 @@ export const router = new VueRouter({
 //Route Guard
 router.beforeEach((to, from, next) => {
   const isAuthenticated = JSON.parse(localStorage.getItem('authObject'));
-  if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' })
-  else if ( to.name === 'login') next()
+  if (to.name !== 'login' && !isAuthenticated) next({ name: 'signup' })
+  else if ( to.name === 'signup') next()
   else next()
 })
