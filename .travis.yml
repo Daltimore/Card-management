@@ -9,8 +9,8 @@ env:
   - CI=true
 
 before_deploy:
-  - yarn install netlify-cli -g
-  - yarn run build
+  - npm install netlify-cli -g
+  - npm run build
 
 deploy:
   provider: script
