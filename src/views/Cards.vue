@@ -9,7 +9,6 @@
         + Add Card
       </button>
     </div>
-    <section class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-10">
       <div
         v-if="allMyCards.length === 0"
         class="flex justify-center items-center my-20 flex-col"
@@ -17,8 +16,9 @@
         <img src="@/assets/img/no-data.svg" />
         <h4 class="text-2xl font-bold pt-5">You do not have any cards!!</h4>
       </div>
-      <div
-        v-else
+      
+      <section class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-10" v-else>
+        <div
         v-for="(card, index) in allMyCards"
         :key="index"
         @click="toggleCard(card)"
@@ -82,6 +82,8 @@
 </template>
 
 <script>
+import { encryptStorage } from '../helpers/function'
+
 export default {
   data() {
     return {
@@ -139,13 +141,15 @@ export default {
             existingCards.push(payload)
             console.log('Card Added successfully')
             this.loader = false
-            localStorage.setItem('myCards', JSON.stringify(existingCards))
+            encryptStorage.setItem('myCards', JSON.stringify(existingCards))
             this.createCardModal = false
         }
       })
     },
     fetchCards() {
-      this.allMyCards = JSON.parse(localStorage.getItem('myCards'))
+      // this.allMyCards = JSON.parse(localStorage.getItem('myCards'))
+      const decryptedData = encryptStorage.getItem('myCards');
+      this.allMyCards = decryptedData
     },
     removeCard(index) {
       const cards = JSON.parse(localStorage.getItem('myCards'))
