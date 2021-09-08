@@ -79,6 +79,26 @@
         </div>
       </div>
     </el-dialog>
+    <el-dialog
+      title=""
+      :visible.sync="successModal"
+      width="30%"
+      >
+      <div class="flex justify-center items-center flex-col">
+        <img src="@/assets/img/check.svg" class="w-10" />
+        <h2 class="text-xl font-semibold pt-4">Card Added Successfully</h2>
+      </div>
+    </el-dialog>
+    <el-dialog
+      title=""
+      :visible.sync="deleteModal"
+      width="30%"
+      >
+      <div class="flex justify-center items-center flex-col">
+        <img src="@/assets/img/wrong.svg" class="w-10 border border-red-500 p-2 rounded-full" />
+        <h2 class="text-xl font-semibold pt-4">Card deleted Successfully</h2>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -89,6 +109,8 @@ export default {
   data() {
     return {
       createCardModal: false,
+      successModal: false,
+      deleteModal: false,
       loader: false,
       user: {},
       allMyCards: [],
@@ -148,8 +170,9 @@ export default {
           }
           let existingCards = encryptStorage.getItem('myCards')
             existingCards.push(payload)
-            console.log('Card Added successfully')
+            this.successModal = true
             this.loader = false
+            // this.successModal = false
             encryptStorage.setItem('myCards', existingCards)
             this.fetchCards()
             this.createCardModal = false
@@ -164,6 +187,7 @@ export default {
     removeCard(index) {
       const cards = encryptStorage.getItem('myCards')
       cards.splice(index, 1)
+      this.deleteModal = true
       encryptStorage.setItem('myCards', cards)
       this.fetchCards()
     }
