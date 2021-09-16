@@ -18,6 +18,7 @@ export const router = new VueRouter({
     },
     {
       path: '/cards',
+      beforeEnter : guardMyroute,
       component: () => import('@/layouts/BlankLayout.vue'),
       children: [
         {
@@ -27,14 +28,23 @@ export const router = new VueRouter({
         }
       ]
     },
-    
   ]
 })
 
-//Route Guard
-router.beforeEach((to, from, next) => {
-  const isAuthenticated = JSON.parse(localStorage.getItem('authObject'));
-  if ( to.name !== 'login' && !isAuthenticated) next({ name: 'login' })
-  else if ( to.name === 'signup') next()
-  else next()
-}) 
+
+function guardMyroute(to, from, next)
+{
+ var isAuthenticated= false;
+if(localStorage.getItem('authObject'))
+  isAuthenticated = true;
+ else
+  isAuthenticated= false;
+ if(isAuthenticated) 
+ {
+  next(); // allow to enter route
+ } 
+ else
+ {
+  next({ name: 'login' }); // go to '/login';
+ }
+}
